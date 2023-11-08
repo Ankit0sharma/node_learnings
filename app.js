@@ -1,5 +1,4 @@
-//TODO Implemented proper role base authentication in employee's last two APIs
-//TODO In company route created a proper get.all API
+//TODO Twilio added in config.routes.js file and Socket-io added in different branch
 require("dotenv").config()
 require("./middleware/passport.middleware");
 
