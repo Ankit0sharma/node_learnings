@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const { UserProfile } = require("../../../models/user");
 
 module.exports = async (req, res) => {
@@ -8,9 +9,8 @@ module.exports = async (req, res) => {
       bio,
       userId,
     });
-    res.json({ profileData });
+    return res.success(profileData);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Could not create user profile" });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

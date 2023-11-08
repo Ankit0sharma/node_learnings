@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const Comment = require("../../../models/comment")
 
 module.exports = async (req, res) => {
@@ -10,9 +11,9 @@ module.exports = async (req, res) => {
     const comments = await Comment.query()
       .where("id", id)
       .where("commented_items_type", type);
-    res.status(200).json(comments);
+      return res.success(comments);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

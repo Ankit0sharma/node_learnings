@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const Product = require("../../../models/product");
 const knex = require('knex')({
   client: 'pg',
@@ -21,9 +22,8 @@ module.exports = async (req, res) => {
     const params = [product.quantity, product.price];
     const result = await knex.raw(query, params);
     const totalPrice = result.rows[0].total_price;
-    res.json({ total_price: totalPrice });
+    return res.success(totalPrice);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

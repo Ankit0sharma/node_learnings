@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const Pet = require("../../../models/pet");
 
 module.exports = async (req, res) => {
@@ -10,11 +11,8 @@ module.exports = async (req, res) => {
       age,
       ownerId,
     });
-    return res.status(201).json({ success: true, newPet: newPet });
+    return res.success(newPet);
   } catch (error) {
-    return res.status(500).json({
-      sucess: false,
-      message: error.message,
-    });
+    return res.serverError(500, ErrorHandler(error));
   }
 };

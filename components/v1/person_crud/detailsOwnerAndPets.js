@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const Person = require("../../../models/person");
 
 module.exports = async (req, res) => {
@@ -7,13 +8,8 @@ module.exports = async (req, res) => {
       .select("name", "email")
       .whereExists(Person.relatedQuery("pets"))
       .orderBy("name");
-    return res
-      .status(200)
-      .json({ success: true, petsAndOwnerDetails: personsWithPets });
+      return res.success(personsWithPets);
   } catch (error) {
-    return res.status(500).json({
-      sucess: false,
-      message: error.message,
-    });
+    return res.serverError(500, ErrorHandler(error));
   }
 };

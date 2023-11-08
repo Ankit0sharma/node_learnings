@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -13,10 +14,9 @@ module.exports = (req, res) => {
   };
   sgMail.send(msg)
     .then(() => {
-      res.json({ message: 'Email sent successfully' });
+      return res.success('Email sent successfully');
     })
     .catch(error => {
-      console.error(error);
-      res.status(500).json({ error: 'An error occurred while sending the email' });
+      return res.serverError(500, ErrorHandler(error));
     });
 }

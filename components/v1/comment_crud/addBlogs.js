@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const BlogPost = require("../../../models/blog")
 
 module.exports = async (req, res) => {
@@ -7,9 +8,9 @@ module.exports = async (req, res) => {
       title,
       content,
     });
-    res.status(201).json(blogPost);
+    return res.success(blogPost);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const Comment = require("../../../models/comment")
 
 module.exports = async (req, res) => {
@@ -8,9 +9,9 @@ module.exports = async (req, res) => {
       commentableId,
       commented_items_type,
     });
-    res.status(201).json(comment);
+    return res.success(comment);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

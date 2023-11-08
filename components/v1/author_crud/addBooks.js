@@ -1,11 +1,12 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const { Book } = require("../../../models/book");
 
 module.exports = async (req, res) => {
   try {
     const { title, description } = req.body;
     const book = await Book.query().insert({ title, description });
-    res.status(201).json(book);
+    return res.success(book);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

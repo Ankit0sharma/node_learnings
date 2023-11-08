@@ -1,5 +1,6 @@
 const moment = require("moment")
 
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const Worker = require("../../../models/worker");
 
 //TODO Example URl = http://localhost:3000/api/v1/company/worker_info?currentDate=2023-11-02&isWeek=true
@@ -90,8 +91,8 @@ module.exports = async (req, res) => {
     query.limit(limit).offset(offset);
 
     const workers = await query;
-    res.json({ data: workers, page, limit });
+    return res.success(workers, page, limit );
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

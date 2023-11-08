@@ -1,3 +1,5 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -29,9 +31,6 @@ module.exports = async (req, role, res) => {
       createdPerson: employeeData,
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    return res.serverError(500, ErrorHandler(error));
   }
 };

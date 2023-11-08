@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const { User } = require("../../../models/user");
 
 module.exports = async (req, res) => {
@@ -9,9 +10,8 @@ module.exports = async (req, res) => {
         "user_profiles.bio"
       )
       .join("user_profiles", "users.id", "user_profiles.userId");
-    res.json(usersAndProfiles);
+      return res.success(usersAndProfiles);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error.message });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

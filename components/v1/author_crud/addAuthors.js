@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const { Author } = require("../../../models/author");
 
 module.exports =
@@ -5,8 +6,8 @@ module.exports =
     try {
       const { name, bio } = req.body;
       const createdAuthor = await Author.query().insert({ name, bio });
-      res.status(201).json(createdAuthor);
+      return res.success(createdAuthor);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      return res.serverError(500, ErrorHandler(error));
     }
   }

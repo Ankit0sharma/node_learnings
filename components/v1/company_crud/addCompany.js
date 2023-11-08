@@ -1,10 +1,11 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const Company = require("../../../models/company");
 
 module.exports = async (req, res) => {
     try {
       const company = await Company.query().insert(req.body);
-      res.status(201).json(company);
+      return res.success(company);
     } catch (error) {
-      res.status(500).json({ error: 'Error adding company' });
+      return res.serverError(500, ErrorHandler(error));
     }
   }

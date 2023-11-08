@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const { User } = require("../../../models/user");
 
 module.exports = async (req, res) => {
@@ -6,9 +7,9 @@ module.exports = async (req, res) => {
 
     const newUser = await User.query().insert({ name, email, password });
 
-    res.json({ addedUser: newUser });
+    return res.success(newUser);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Could not create user" });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

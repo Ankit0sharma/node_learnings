@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const { Author } = require("../../../models/author");
 const { Book } = require("../../../models/book");
 const AuthorBook = require("../../../models/authorsAndBooks");
@@ -14,9 +15,8 @@ module.exports = async (req, res) => {
             author_id: authorId,
             book_id: bookId,
         });
-        res.status(201).json({ message: 'Relationship added successfully' });
+        return res.success('Relationship added successfully');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Server error' });
+        return res.serverError(500, ErrorHandler(error));
     }
 }

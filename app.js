@@ -7,12 +7,14 @@ const passport = require("passport");
 const morgan = require('morgan');
 const expressSession = require("express-session");
 
+const responseMiddleWare = require("./middleware/response.middleware");
 const appRouter = require("./routes/v1/index")
 const { cronNodeCron } = require("./lib/utils/cron.service");
 const schedule = require("./lib/utils/cron.service");
 
 const app = express();
 
+app.use(responseMiddleWare);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));

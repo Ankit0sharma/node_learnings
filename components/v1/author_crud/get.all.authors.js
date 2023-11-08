@@ -1,11 +1,11 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const { Author } = require("../../../models/author");
 
 module.exports = async (req, res) => {
-    try {
-      const authors = await Author.query().select();
-      res.status(200).json(authors);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+  try {
+    const authors = await Author.query().select();
+    return res.success(authors);
+  } catch (error) {
+    return res.serverError(500, ErrorHandler(error));
   }
-  
+}

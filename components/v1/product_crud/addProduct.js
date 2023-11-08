@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const Product = require("../../../models/product");
 
 module.exports =  async (req, res) => {
@@ -11,9 +12,8 @@ module.exports =  async (req, res) => {
         price,
         quantity,
       });
-      res.status(201).json(product);
+      return res.success(product);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
+      return res.serverError(500, ErrorHandler(error));
     }
   }

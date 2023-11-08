@@ -1,4 +1,4 @@
-//Implemented Pagination and Sorting
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const AuthorBook = require("../../../models/authorsAndBooks");
 const { Book } = require("../../../models/book");
 
@@ -14,9 +14,9 @@ module.exports = async (req, res) => {
     if (books.length === 0) {
       return res.status(404).json({ message: "Author not found or has not written any books" });
     }
-    res.status(200).json({ books: books });
+    return res.success(books);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.serverError(500, ErrorHandler(error));
   }
 }

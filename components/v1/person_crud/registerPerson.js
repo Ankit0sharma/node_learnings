@@ -1,3 +1,4 @@
+const { ErrorHandler } = require('../../../lib/utils/custom.error');
 const bcrypt = require("bcrypt");
 const Person = require("../../../models/person");
 
@@ -19,15 +20,8 @@ module.exports = async (req, res) => {
             address,
             password: hashedPassword,
         });
-        return res.status(201).json({
-            success: true,
-            message: "Person created successfully",
-            createdPerson: personData,
-        });
+        return res.success(personData);
     } catch (error) {
-        return res.status(500).json({
-            sucess: false,
-            message: error.message,
-        });
+        return res.serverError(500, ErrorHandler(error));
     }
 }
