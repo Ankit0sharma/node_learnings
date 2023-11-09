@@ -1,4 +1,5 @@
 //Joi is implemented here
+const constants = require("../../config/constants")
 const joiMiddleware = require("../../middleware/joi.middleware");
 const joiSchemas = require("../../lib/utils/joi.schemas");
 const passport = require("passport")
@@ -45,10 +46,8 @@ employeeRouter.post("/login_marketer", joiMiddleware.joiBodyMiddleware(joiSchema
 });
 
 //Protected route with authentication and authorization
-// employeeRouter.get("/se_protected/:id", passport.authenticate("jwt", { session: false }), checkRole(["se"]), seDataComponent);
+employeeRouter.get("/se_protected", passportMiddleware.jwtAuth, checkRole.canAccess([constants.empRole.se]), seDataComponent);
 
-employeeRouter.get("/se_protected", passportMiddleware.jwtAuth, checkRole, seDataComponent);
-
-employeeRouter.get("/hr_protected", passportMiddleware.jwtAuth, checkRole, hrDataComponent);
+employeeRouter.get("/hr_protected", passportMiddleware.jwtAuth, checkRole.canAccess([constants.empRole.hr]), hrDataComponent);
 
 module.exports = employeeRouter

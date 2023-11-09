@@ -1,8 +1,10 @@
 "use strict";
 
 const constants = Object.freeze({
-    userRole: {
+    empRole: {
         user: "user",
+        se: 'se',
+        hr: 'hr'
     },
     approvalStatus: {
         notSubmitted: "not_submitted",
