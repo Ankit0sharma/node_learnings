@@ -1,7 +1,7 @@
 const request = require('supertest');
 const faker = require('faker');
 
-let server = require('../../app');
+let server = require('../../index');
 let app = server
 
 let signUpRequestBody;
